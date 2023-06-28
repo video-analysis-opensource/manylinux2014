@@ -14,7 +14,7 @@ relate_tags = []
 _amd = [i['name'] for i in quay_io_data_amd64['tags']][:10]
 _arm = [i['name'] for i in quay_io_data_arm64['tags']][:10]
 for i in _amd:
-    if i in _arm and i !='latest':
+    if  i !='latest':
         relate_tags.append(i)
 relate_tags.reverse()
 print(relate_tags)
