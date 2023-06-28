@@ -1,0 +1,2 @@
+ARG FROM_TAG
+FROM zhoukunpeng505/manylinux2014_${TARGETARCH}:${FROM_TAG}

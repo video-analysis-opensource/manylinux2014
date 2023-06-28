@@ -23,9 +23,12 @@ github_amd64 = requests.get('https://hub.docker.com/v2/repositories/zhoukunpeng5
                             'manylinux2014-amd64/tags/?page_size=25&page=1&name&ordering').json()
 github_arm64 = requests.get('https://hub.docker.com/v2/repositories/zhoukunpeng505/'
                             'manylinux2014-arm64/tags/?page_size=25&page=1&name&ordering').json()
+github_cross = requests.get('https://hub.docker.com/v2/repositories/zhoukunpeng505/'
+                            'manylinux2014/tags/?page_size=25&page=1&name&ordering').json()
+
 github_amd64 = [i['name'] for i in copy.deepcopy(github_amd64.get("results", []))]
 github_arm64 = [i['name'] for i in copy.deepcopy(github_arm64.get("results", []))]
-
+github_cross = [i['name'] for i in copy.deepcopy(github_cross.get("results", []))]
 
 
 for index,tag in  enumerate(relate_tags):
@@ -51,5 +54,13 @@ for index,tag in  enumerate(relate_tags):
             os.system(f"docker push zhoukunpeng505/manylinux2014_arm64:latest")
 
 
-
+    if tag not in github_cross:
+        if not is_end_loop:
+            os.system(f"docker buildx build --platform linux/arm64,linux/amd64  "
+                      f"--build-arg FROM_TAG='{tag}' -t zhoukunpeng505/manylinux2014:{tag} "
+                      f" .  --push")
+        else:
+            os.system(f"docker buildx build --platform linux/arm64,linux/amd64  "
+                      f"--build-arg FROM_TAG='{tag}' -t zhoukunpeng505/manylinux2014:{tag}  "
+                      f"-t zhoukunpeng505/manylinux2014:latest  .  --push ")
 
