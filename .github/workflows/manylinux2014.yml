@@ -43,8 +43,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@master
         with:
-          username: ${{ secrets.DOCKHUB_USER }}
-          password: ${{ secrets.DOCKHUB_SECRET }}
+          username: ${{ secrets.DOCKHUB_USER_ZKP }}
+          password: ${{ secrets.DOCKHUB_SECRET_ZKP }}
 
       - name: run py
         run: python to_dockerhub.py
